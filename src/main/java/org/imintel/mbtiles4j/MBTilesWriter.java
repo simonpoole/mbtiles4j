@@ -1,20 +1,14 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE
+ * file distributed with this work for additional information regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  */
 package org.imintel.mbtiles4j;
 
@@ -28,7 +22,7 @@ import java.util.UUID;
 
 public class MBTilesWriter {
 
-    Connection connection;
+    Connection   connection;
     private File file;
 
     public MBTilesWriter(File f) throws MBTilesWriteException {
@@ -61,11 +55,11 @@ public class MBTilesWriter {
         }
     }
 
-
     private void init() throws MBTilesWriteException {
         try {
             SQLHelper.createTable(connection, "metadata", "(name text,value text)", "CREATE UNIQUE INDEX name on metadata (name);");
-            SQLHelper.createTable(connection, "tiles", "(zoom_level integer, tile_column integer, tile_row integer, tile_data blob)", "CREATE UNIQUE INDEX tile_index on tiles (zoom_level, tile_column, tile_row);");
+            SQLHelper.createTable(connection, "tiles", "(zoom_level integer, tile_column integer, tile_row integer, tile_data blob)",
+                    "CREATE UNIQUE INDEX tile_index on tiles (zoom_level, tile_column, tile_row);");
         } catch (MBTilesException e) {
             throw new MBTilesWriteException("Initialize new mbtiles failed", e);
         }
@@ -126,4 +120,13 @@ public class MBTilesWriter {
         return file;
     }
 
+    /**
+     * Expose the Connection object
+     * This is for example useful for turning off auto commit.
+     * 
+     * @return the current Connection object
+     */
+    public Connection getConnection() {
+        return connection;
+    }
 }
